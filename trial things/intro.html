@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Initializing...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        /* Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Terminal Overlay */
+        .terminal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .terminal-window {
+            background: rgba(0, 20, 0, 0.9);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #00ff00;
+        }
+
+        .terminal-title {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .terminal-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .control-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: none;
+        }
+
+        .close-btn { background: #ff5f56; }
+        .minimize-btn { background: #ffbd2e; }
+        .maximize-btn { background: #27ca3f; }
+
+        .terminal-content {
+            font-size: 14px;
+            line-height: 1.4;
+            min-height: 300px;
+        }
+
+        .terminal-line {
+            margin-bottom: 5px;
+            opacity: 0;
+            animation: typewriter 0.1s ease-in forwards;
+        }
+
+        .terminal-line.typing {
+            border-right: 2px solid #00ff00;
+            animation: blink 1s infinite;
+        }
+
+        .terminal-line.complete {
+            border-right: none;
+        }
+
+        .command {
+            color: #00ff00;
+        }
+
+        .output {
+            color: #ffffff;
+        }
+
+        .error {
+            color: #ff0000;
+        }
+
+        .success {
+            color: #00ff00;
+        }
+
+        .warning {
+            color: #ffff00;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #00ff00;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff00, #00cc00);
+            width: 0%;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00ff00;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes typewriter {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: #00ff00; }
+            51%, 100% { border-color: transparent; }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .glitch-text {
+            animation: glitch 0.3s ease-in-out;
+        }
+
+        /* Matrix Rain Effect */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .matrix-char {
+            position: absolute;
+            color: #00ff00;
+            font-size: 20px;
+            font-family: 'Courier New', monospace;
+            animation: matrix-fall 3s linear infinite;
+        }
+
+        @keyframes matrix-fall {
+            to { transform: translateY(100vh); }
+        }
+
+        /* Skip Button */
+        .skip-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .skip-button:hover {
+            background: rgba(0, 255, 0, 0.4);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        /* Hidden initially */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix Rain Background -->
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <!-- Hacking Background -->
+    <div class="hacking-background">
+        <div class="binary-rain" id="binaryRain"></div>
+        <div class="circuit-pattern"></div>
+        <div class="scanning-line"></div>
+        <div class="glitch-overlay"></div>
+        <div class="data-stream" id="dataStream"></div>
+        <div class="holographic-grid"></div>
+        <div class="energy-field"></div>
+        <div class="code-rain" id="codeRain"></div>
+    </div>
+
+    <!-- Terminal Overlay -->
+    <div class="terminal-overlay">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-title">ELICIT.exe</div>
+                <div class="terminal-controls">
+                    <button class="control-btn close-btn"></button>
+                    <button class="control-btn minimize-btn"></button>
+                    <button class="control-btn maximize-btn"></button>
+                </div>
+            </div>
+            <div class="terminal-content" id="terminalContent">
+                <!-- Terminal content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Skip Button -->
+    <button class="skip-button" onclick="skipIntro()">SKIP INTRO</button>
+
+    <link rel="stylesheet" href="video-background.css">
+    <script src="intro.js"></script>
+</body>
+</html> 

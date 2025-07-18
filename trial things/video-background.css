@@ -1,0 +1,271 @@
+/* Hacking Video Background Animation */
+/* This creates a dynamic background that simulates a hacking video */
+
+.hacking-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: #000;
+    overflow: hidden;
+}
+
+/* Binary Rain Effect */
+.binary-rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+}
+
+.binary-column {
+    position: absolute;
+    top: -100px;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+    text-shadow: 0 0 8px #00ff00, 0 0 16px #00ff00;
+    animation: binary-fall 4s linear infinite;
+}
+
+@keyframes binary-fall {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+/* Circuit Board Pattern */
+.circuit-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(90deg, transparent 98%, #00ff00 100%),
+        linear-gradient(0deg, transparent 98%, #00ff00 100%);
+    background-size: 50px 50px;
+    opacity: 0.1;
+    animation: circuit-pulse 3s ease-in-out infinite;
+}
+
+@keyframes circuit-pulse {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.3; }
+}
+
+/* Scanning Lines */
+.scanning-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00ff00, transparent);
+    animation: scan-sweep 2s linear infinite;
+}
+
+@keyframes scan-sweep {
+    0% {
+        top: 0;
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
+}
+
+/* Glitch Effect */
+.glitch-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    pointer-events: none;
+    animation: glitch-effect 5s ease-in-out infinite;
+}
+
+@keyframes glitch-effect {
+    0%, 90%, 100% {
+        opacity: 0;
+    }
+    5%, 85% {
+        opacity: 0.1;
+        transform: translateX(0);
+    }
+    7% {
+        opacity: 0.2;
+        transform: translateX(-2px);
+    }
+    9% {
+        opacity: 0.1;
+        transform: translateX(2px);
+    }
+}
+
+/* Data Stream Effect */
+.data-stream {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
+}
+
+.data-packet {
+    position: absolute;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    animation: data-flow 3s linear infinite;
+}
+
+@keyframes data-flow {
+    0% {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(calc(100vw + 100px));
+        opacity: 0;
+    }
+}
+
+/* Holographic Grid */
+.holographic-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+    background-size: 100px 100px;
+    animation: grid-pulse 4s ease-in-out infinite;
+}
+
+@keyframes grid-pulse {
+    0%, 100% {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.3;
+        transform: scale(1.1);
+    }
+}
+
+/* Energy Field */
+.energy-field {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    border: 2px solid #00ff00;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: energy-pulse 2s ease-in-out infinite;
+}
+
+.energy-field::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 220px;
+    height: 220px;
+    border: 1px solid rgba(0, 255, 0, 0.5);
+    border-radius: 50%;
+    animation: energy-pulse 2s ease-in-out infinite 0.5s;
+}
+
+.energy-field::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 240px;
+    height: 240px;
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    border-radius: 50%;
+    animation: energy-pulse 2s ease-in-out infinite 1s;
+}
+
+@keyframes energy-pulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+    }
+}
+
+/* Code Rain */
+.code-rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+}
+
+.code-drop {
+    position: absolute;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    animation: code-fall 3s linear infinite;
+}
+
+@keyframes code-fall {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+} 

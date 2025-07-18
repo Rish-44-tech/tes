@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Startup 3D Animation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Rubik+80s+Fade&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+        .rubik-80s-fade-regular {
+        font-family: "Rubik 80s Fade", system-ui;
+        font-weight: 400;
+        font-style: normal;
+}
+
+   
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background: #000;
+        overflow: hidden;
+        min-height: 100vh;
+        position: relative;
+      }
+      .binary-bg {
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .binary-digit {
+        position: absolute;
+        color: #0f0;
+        font-size: 1.5rem;
+        opacity: 0.2;
+        user-select: none;
+        font-family: monospace;
+        animation: floatBinary 8s linear infinite;
+      }
+      @keyframes floatBinary {
+        0% { transform: translateY(-10vh); opacity: 0.2; }
+        80% { opacity: 0.2; }
+        100% { transform: translateY(110vh); opacity: 0; }
+      }
+      nav {
+        width: 100vw;
+        background: rgba(20, 20, 20, 0.95);
+        padding: 1rem 0;
+        position: fixed;
+        top: 0; left: 0;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        box-shadow: 0 2px 8px #0008;
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 2.5rem;
+        margin: 0;
+        padding: 0;
+      }
+      nav ul li {
+        display: inline;
+      }
+      nav ul li a {
+        color: #0f0;
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+        transition: color 0.2s;
+        font-family: 'Caveat', cursive;
+      }
+      nav ul li a:hover {
+        color: #32b318;
+      }
+      .centered-heading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        text-align: center;
+        width: 100vw;
+      }
+      h1 {
+        font-family: "Rubik 80s Fade", system-ui;
+        color: #32b318;
+        font-size: 6rem;
+        margin-top: 0;
+        margin-bottom: 0;
+        letter-spacing: 0.1em;
+        text-shadow: 0 0 20px #0f0, 0 0 40px #000;
+      }
+      @media (max-width: 600px) {
+        h1 { font-size: 2.5rem; }
+        nav ul { gap: 1rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="binary-bg" id="binary-bg"></div>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Events</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">About Us</a></li>
+      </ul>
+    </nav>
+    <div class="centered-heading">
+      <h1>ELICIT'25</h1>
+    </div>
+    <script>
+      // Generate random binary digits in the background
+      const binaryBg = document.getElementById('binary-bg');
+      const binaryCount = 60;
+      function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+      function createBinaryDigit() {
+        const digit = document.createElement('span');
+        digit.className = 'binary-digit';
+        digit.textContent = Math.random() > 0.5 ? '1' : '0';
+        digit.style.left = randomInt(0, 100) + 'vw';
+        digit.style.fontSize = randomInt(16, 40) + 'px';
+        digit.style.animationDuration = randomInt(6, 12) + 's';
+        digit.style.opacity = (Math.random() * 0.3 + 0.15).toFixed(2);
+        binaryBg.appendChild(digit);
+        digit.addEventListener('animationend', () => {
+          digit.remove();
+        });
+      }
+      setInterval(() => {
+        if (binaryBg.childElementCount < binaryCount) {
+          createBinaryDigit();
+        }
+      }, 200);
+      // Initial fill
+      for (let i = 0; i < binaryCount; i++) {
+        setTimeout(createBinaryDigit, i * 100);
+      }
+    </script>
+  </body>
+</html>
