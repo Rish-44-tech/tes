@@ -10,7 +10,7 @@ class HackingIntro {
         this.video = document.getElementById('hackingVideo');
         
         this.terminalScript = [
-            { type: 'command', text: 'booting up Elicit.exe', delay: 200 },
+            { type: 'command', text: 'booting up elicit.exe', delay: 200 },
             { type: 'output', text: 'Launching innovation protocols...', delay: 150 },
             { type: 'command', text: 'connect great minds...', delay: 200 },
             { type: 'output', text: 'great minds connected. Productivity at 100%.', delay: 150 },
